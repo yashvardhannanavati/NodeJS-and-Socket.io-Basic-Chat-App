@@ -18,5 +18,28 @@
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
+
+    <!--This just gives the path to socket.io.js -->
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <script>
+      
+      window.onload = function(){
+        var socket = io();
+        document.querySelector('form').addEventListener('submit', function(e){
+        e.preventDefault();
+        var msg = document.querySelector("#m").value; 
+        socket.emit('chat message', msg);  
+        document.querySelector("#m").value = '';
+      });
+
+      socket.on('chat message', function(msg){
+        var li = document.createElement('li');
+        li.innerHTML = msg;
+        document.querySelector('#messages').appendChild(li);
+      });
+
+      }      
+    </script>
   </body>
 </html>
